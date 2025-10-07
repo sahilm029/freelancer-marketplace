@@ -1,6 +1,6 @@
 "use client";
 
-// This single file contains the complete, interactive frontend prototype for the Freeloper Marketplace.
+// This single file contains the complete, interactive frontend prototype for the freelancer Marketplace.
 // It is designed to start with NO MOCK DATA, allowing you to populate the platform from a blank slate.
 // It uses React Hooks to manage state and simulate a full user experience in a Next.js project.
 
@@ -58,7 +58,7 @@ const initialReviews = [];
 const Header = ({ setView, currentUser, onLogout, onShowAuth }) => (
   <header className="bg-white shadow-sm sticky top-0 z-50">
     <nav className="container mx-auto px-6 py-3 flex justify-between items-center">
-      <div onClick={() => setView('home')} className="font-bold text-2xl text-purple-700 cursor-pointer">Freeloper</div>
+      <div onClick={() => setView('home')} className="font-bold text-2xl text-purple-700 cursor-pointer">freelancer</div>
       <div className="flex items-center space-x-4">
         <button onClick={() => setView('projects')} className="text-gray-600 hover:text-purple-700">Browse Projects</button>
         {currentUser?.role === 'Client' && (
@@ -133,7 +133,7 @@ const AuthModal = ({ onLogin, onSignUp, onCancel, users }) => {
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
         <div className="bg-white rounded-lg p-8 w-full max-w-md">
-          <h2 className="text-2xl font-bold mb-4 text-center">{isLoginView ? 'Login to Freeloper' : 'Create an Account'}</h2>
+          <h2 className="text-2xl font-bold mb-4 text-center">{isLoginView ? 'Login to freelancer' : 'Create an Account'}</h2>
           
           {isLoginView ? (
             <div>
