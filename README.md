@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+freelancer Marketplace 🚀
+A high-fidelity, interactive frontend prototype for a modern freelance marketplace platform. This project simulates the complete user experience for both clients and freelancers, from registration and project posting to bidding, hiring, and leaving reviews.
 
-## Getting Started
+This project was developed as a part of the Software Engineering course.
 
-First, run the development server:
+✨ Key Features
+This prototype is a single-page application built with Next.js that uses React state to simulate a full multi-page experience.
 
-```bash
+👥 Dual User Roles: Full workflows for both Clients and Freelancers.
+
+🔐 Simulated Auth: Interactive Login and Sign-Up modal to switch between user roles.
+
+📝 Project Posting: Clients can create, post, and manage new projects.
+
+🔍 Project Browsing: A filterable and searchable gallery of all available projects.
+
+💰 Bidding System: Freelancers can view project details and submit proposals with a bid amount.
+
+🤝 Hiring Workflow: Clients can review proposals and hire a freelancer for a project.
+
+✅ Project Lifecycle Management: Track project status from "Open" -> "In Progress" -> "Completed".
+
+⭐ Review & Rating System: Clients can leave a star rating and a comment for freelancers on completed projects.
+
+📊 Dynamic Dashboards: Personalized dashboards for both clients and freelancers to track their projects and bids.
+
+📱 Fully Responsive: Modern UI designed to work seamlessly on desktop and mobile devices.
+
+🛠️ Tech Stack
+Framework: Next.js (App Router)
+
+Language: JavaScript (JSX) with JSDoc for typing
+
+Styling: Tailwind CSS
+
+State Management: React Hooks (useState, useEffect)
+
+Icons: Lucide React
+
+🚀 Getting Started
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+
+Prerequisites
+Node.js (v18.0 or later)
+
+npm or yarn
+
+Installation
+Clone the repository:
+
+git clone [https://github.com/your-username/freelancer-marketplace.git](https://github.com/your-username/freelancer-marketplace.git)
+
+Navigate to the project directory:
+
+cd freelancer-marketplace
+
+Install dependencies:
+
+npm install
+
+Run the development server:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+📂 Project Structure
+This project is a high-fidelity prototype contained within a single primary file to demonstrate the full application logic in one place.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+app/page.tsx: This file contains the entire React application, including:
 
-## Learn More
+Mock data (users, projects, bids, reviews).
 
-To learn more about Next.js, take a look at the following resources:
+All UI components (Header, ProjectCard, Modals, etc.).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+"View" components that act as pages (HomeView, ProjectsView, DashboardView).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The main App component, which handles all state management and view rendering.
 
-## Deploy on Vercel
+👨‍💻 Team Members
+This project was a collaborative effort by:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Sahil Mohite
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Lakshya Marwaha
+
+Sahil Mhapsekar
+
+Yash More
