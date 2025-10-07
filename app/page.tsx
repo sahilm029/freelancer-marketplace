@@ -1,9 +1,8 @@
 "use client";
 
-// This single file contains the complete, interactive frontend prototype for the Freelancer Marketplace.
-// It is designed for a Next.js App Router project (app/page.tsx).
-// It uses React Hooks (useState) to manage which "page" is visible and simulates a full user experience.
-// All data is mocked and interactive, including a new Sign-Up feature.
+// This single file contains the complete, interactive frontend prototype for the Freeloper Marketplace.
+// It is designed to start with NO MOCK DATA, allowing you to populate the platform from a blank slate.
+// It uses React Hooks to manage state and simulate a full user experience in a Next.js project.
 
 import React, { useState, useEffect } from 'react';
 import { Search, Briefcase, User, Star, MessageSquare, DollarSign, ArrowLeft, LogOut, CheckCircle, XCircle, PlusCircle, Award, Edit } from 'lucide-react';
@@ -48,37 +47,18 @@ import { Search, Briefcase, User, Star, MessageSquare, DollarSign, ArrowLeft, Lo
  */
 
 
-// --- MOCK DATABASE ---
-const initialUsers = [
-  { id: 1, name: 'Innovate Corp', role: 'Client', avatarUrl: 'https://placehold.co/150/7c3aed/ffffff?text=IC' },
-  { id: 2, name: 'Alice Johnson', role: 'Freelancer', title: 'Senior React Developer', avatarUrl: 'https://placehold.co/150/db2777/ffffff?text=AJ', rating: 4.9 },
-  { id: 3, name: 'Data Solutions LLC', role: 'Client', avatarUrl: 'https://placehold.co/150/0e7490/ffffff?text=DS' },
-  { id: 4, name: 'Bob Williams', role: 'Freelancer', title: 'Full-Stack Engineer', avatarUrl: 'https://placehold.co/150/d97706/ffffff?text=BW', rating: 4.7 },
-  { id: 5, name: 'Charlie Brown', role: 'Freelancer', title: 'UI/UX Designer', avatarUrl: 'https://placehold.co/150/65a30d/ffffff?text=CB', rating: 5.0 },
-];
-
-const initialProjects = [
-  { id: 1, title: 'Build a Modern E-commerce Website', description: 'We need a fully responsive e-commerce platform with a clean UI, built using Next.js and Tailwind CSS. Must include a shopping cart and checkout functionality.', budget: 5000, skills: ['Next.js', 'React', 'Tailwind CSS', 'TypeScript'], clientId: 1, status: 'Open', hiredFreelancerId: null },
-  { id: 2, title: 'Database Schema for Analytics Platform', description: 'Design a scalable PostgreSQL database schema for our new user analytics platform. Must handle millions of events per day.', budget: 2500, skills: ['PostgreSQL', 'Data Modeling', 'SQL'], clientId: 3, status: 'Open', hiredFreelancerId: null },
-  { id: 3, title: 'Mobile App UI/UX Redesign', description: 'Redesign our existing iOS and Android application to improve user engagement. Deliverables should be high-fidelity mockups in Figma.', budget: 3000, skills: ['Figma', 'UI Design', 'UX Research'], clientId: 1, status: 'In Progress', hiredFreelancerId: 5 },
-  { id: 4, title: 'Develop a REST API for a To-Do App', description: 'Create a secure and well-documented REST API using Node.js and Express. Must include user authentication.', budget: 1500, skills: ['Node.js', 'Express', 'JWT', 'REST API'], clientId: 3, status: 'Completed', hiredFreelancerId: 4 },
-];
-
-const initialBids = [
-  { id: 1, projectId: 1, freelancerId: 2, bidAmount: 4800, proposalText: "I have extensive experience with Next.js and have built several e-commerce sites. I can deliver a high-quality product within your timeline." },
-  { id: 2, projectId: 1, freelancerId: 4, bidAmount: 4500, proposalText: "As a full-stack engineer, I can handle both the frontend and potential backend logic for this project efficiently." },
-  { id: 3, projectId: 3, freelancerId: 5, bidAmount: 2900, proposalText: "I specialize in creating intuitive and beautiful user interfaces. I have reviewed your current app and have several ideas for improvement. I can provide a full case study." },
-];
-
-const initialReviews = [
-    { id: 1, projectId: 4, freelancerId: 4, rating: 5, comment: "Bob was fantastic. Delivered the API ahead of schedule and the code quality was excellent." }
-];
+// --- EMPTY INITIAL DATABASE ---
+// The application starts with no data. All users, projects, etc., will be created through the UI.
+const initialUsers = [];
+const initialProjects = [];
+const initialBids = [];
+const initialReviews = [];
 
 // --- UI COMPONENTS ---
 const Header = ({ setView, currentUser, onLogout, onShowAuth }) => (
   <header className="bg-white shadow-sm sticky top-0 z-50">
     <nav className="container mx-auto px-6 py-3 flex justify-between items-center">
-      <div onClick={() => setView('home')} className="font-bold text-2xl text-purple-700 cursor-pointer">Freelancer</div>
+      <div onClick={() => setView('home')} className="font-bold text-2xl text-purple-700 cursor-pointer">Freeloper</div>
       <div className="flex items-center space-x-4">
         <button onClick={() => setView('projects')} className="text-gray-600 hover:text-purple-700">Browse Projects</button>
         {currentUser?.role === 'Client' && (
@@ -134,7 +114,6 @@ const AuthModal = ({ onLogin, onSignUp, onCancel, users }) => {
         const name = formData.get('name');
         const role = formData.get('role');
         
-        // Simple validation
         if (!name || !role) {
             alert('Please fill out all fields.');
             return;
@@ -154,13 +133,13 @@ const AuthModal = ({ onLogin, onSignUp, onCancel, users }) => {
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
         <div className="bg-white rounded-lg p-8 w-full max-w-md">
-          <h2 className="text-2xl font-bold mb-4 text-center">{isLoginView ? 'Login to Freelancer' : 'Create an Account'}</h2>
+          <h2 className="text-2xl font-bold mb-4 text-center">{isLoginView ? 'Login to Freeloper' : 'Create an Account'}</h2>
           
           {isLoginView ? (
             <div>
               <p className="text-center text-sm text-gray-600 mb-6">Select a user to simulate logging in:</p>
               <div className="space-y-4 max-h-64 overflow-y-auto">
-                {users.map(user => (
+                {users.length > 0 ? users.map(user => (
                   <button key={user.id} onClick={() => onLogin(user)} className="w-full flex items-center p-3 border rounded-lg hover:bg-gray-100">
                     <img src={user.avatarUrl} alt={user.name} className="w-10 h-10 rounded-full" />
                     <div className="ml-4 text-left">
@@ -168,7 +147,7 @@ const AuthModal = ({ onLogin, onSignUp, onCancel, users }) => {
                       <p className="text-sm text-gray-500">{user.role}</p>
                     </div>
                   </button>
-                ))}
+                )) : <p className="text-center text-gray-500">No users yet. Please sign up.</p>}
               </div>
             </div>
           ) : (
@@ -199,14 +178,16 @@ const AuthModal = ({ onLogin, onSignUp, onCancel, users }) => {
     );
 };
 
-// ... (Other components like ReviewModal, HomeView, etc. remain the same) ...
-
 const ReviewModal = ({ project, freelancer, onAddReview, onCancel }) => {
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (rating === 0) {
+            alert("Please select a star rating.");
+            return;
+        }
         onAddReview({
             id: Date.now(),
             projectId: project.id,
@@ -286,24 +267,34 @@ const ProjectsView = ({ setView, setSelectedProjectId, projects }) => {
             />
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map(project => (
-            <ProjectCard key={project.id} project={project} setView={setView} setSelectedProjectId={setSelectedProjectId} />
-          ))}
-        </div>
+        {filteredProjects.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredProjects.map(project => (
+                <ProjectCard key={project.id} project={project} setView={setView} setSelectedProjectId={setSelectedProjectId} />
+              ))}
+            </div>
+        ) : (
+            <div className="text-center text-gray-500 py-16 border-dashed border-2 rounded-lg">
+                <Briefcase size={48} className="mx-auto mb-4" />
+                <h3 className="text-xl font-semibold">No Projects Found</h3>
+                <p>It looks like no projects have been posted yet. Log in as a client to post the first one!</p>
+            </div>
+        )}
       </div>
     );
 };
 
-const ProjectDetailView = ({ projectId, setView, currentUser, projects, bids, addBid, onHire }) => {
+const ProjectDetailView = ({ projectId, setView, currentUser, users, projects, bids, addBid, onHire }) => {
   const project = projects.find(p => p.id === projectId);
-  const client = initialUsers.find(u => u.id === project?.clientId);
+  const client = users.find(u => u.id === project?.clientId);
   const [showSuccess, setShowSuccess] = useState(false);
 
   if (!project || !client) return <div>Project not found.</div>;
   
   const projectBids = bids.filter(b => b.projectId === projectId);
   const isClientOwner = currentUser?.role === 'Client' && currentUser.id === project.clientId;
+  
+  const hasAlreadyBid = currentUser ? projectBids.some(b => b.freelancerId === currentUser.id) : false;
 
   const handleSubmitBid = (e) => {
     e.preventDefault();
@@ -344,7 +335,7 @@ const ProjectDetailView = ({ projectId, setView, currentUser, projects, bids, ad
           <h2 className="text-2xl font-bold text-gray-800 mt-12 mb-6">Proposals ({projectBids.length})</h2>
           <div className="space-y-6">
             {projectBids.map(bid => {
-              const freelancer = initialUsers.find(u => u.id === bid.freelancerId);
+              const freelancer = users.find(u => u.id === bid.freelancerId);
               return (
                 <div key={bid.id} className="bg-white border rounded-lg p-6">
                   <div className="flex items-start justify-between">
@@ -357,9 +348,11 @@ const ProjectDetailView = ({ projectId, setView, currentUser, projects, bids, ad
                     </div>
                     <div className="text-right">
                       <p className="text-xl font-bold text-purple-700">${bid.bidAmount.toLocaleString()}</p>
-                      <div className="flex items-center text-sm text-yellow-500 mt-1 justify-end">
-                        <Star size={16} className="mr-1" /> {freelancer?.rating}
-                      </div>
+                      {freelancer?.rating > 0 && 
+                        <div className="flex items-center text-sm text-yellow-500 mt-1 justify-end">
+                            <Star size={16} className="mr-1" /> {freelancer?.rating}
+                        </div>
+                      }
                     </div>
                   </div>
                   <p className="text-gray-600 my-4">{bid.proposalText}</p>
@@ -379,7 +372,7 @@ const ProjectDetailView = ({ projectId, setView, currentUser, projects, bids, ad
                     <p className="font-bold text-gray-800">Project Budget</p>
                     <p className="text-3xl font-extrabold text-purple-700">${project.budget.toLocaleString()}</p>
                 </div>
-                {currentUser?.role === 'Freelancer' && project.status === 'Open' ? (
+                {currentUser?.role === 'Freelancer' && project.status === 'Open' && !hasAlreadyBid && (
                     <form onSubmit={handleSubmitBid} className="mt-6 border-t pt-6">
                         <h3 className="font-bold text-lg mb-4">Submit Your Proposal</h3>
                         <div>
@@ -393,11 +386,19 @@ const ProjectDetailView = ({ projectId, setView, currentUser, projects, bids, ad
                         <button type="submit" className="mt-6 w-full bg-purple-600 text-white font-bold py-3 rounded-lg hover:bg-purple-700">Submit Proposal</button>
                         {showSuccess && <p className="text-green-600 text-center mt-4 text-sm flex items-center justify-center"><CheckCircle size={16} className="mr-2"/> Proposal submitted!</p>}
                     </form>
-                ) : project.status !== 'Open' ? (
+                )}
+                {hasAlreadyBid && (
+                    <div className="mt-6 border-t pt-6 text-center text-green-600 bg-green-50 p-4 rounded-lg">
+                        <CheckCircle className="mx-auto mb-2" />
+                        <p className="font-semibold">You have already submitted a proposal for this project.</p>
+                    </div>
+                )}
+                {project.status !== 'Open' && (
                      <div className="mt-6 border-t pt-6 text-center text-gray-600 bg-gray-100 p-4 rounded-lg">
                         <p className="font-semibold">This project is no longer accepting proposals.</p>
                     </div>
-                ) : (
+                )}
+                {!currentUser && project.status === 'Open' && (
                     <div className="mt-6 border-t pt-6 text-center text-gray-600">
                         <p>Please log in as a Freelancer to submit a proposal.</p>
                     </div>
@@ -427,7 +428,7 @@ const DashboardView = ({ currentUser, projects, setView, setSelectedProjectId, o
             <h2 className="text-2xl font-bold mb-4">My Projects</h2>
              <div className="bg-white p-6 rounded-lg border">
                 <div className="space-y-4">
-                    {myProjects.map(p => (
+                    {myProjects.length > 0 ? myProjects.map(p => (
                         <div key={p.id} className="border-b pb-4 last:border-b-0 last:pb-0">
                              <div className="flex justify-between items-center">
                                 <div>
@@ -445,8 +446,7 @@ const DashboardView = ({ currentUser, projects, setView, setSelectedProjectId, o
                                 </div>
                              </div>
                         </div>
-                    ))}
-                    {myProjects.length === 0 && <p className="text-gray-500">You have no projects yet.</p>}
+                    )) : <p className="text-gray-500">You have no projects yet.</p>}
                 </div>
             </div>
         </div>
@@ -575,7 +575,7 @@ export default function App() {
         return <ProjectsView setView={setView} setSelectedProjectId={setSelectedProjectId} projects={projects}/>;
       case 'projectDetail':
         if (selectedProjectId) {
-          return <ProjectDetailView projectId={selectedProjectId} setView={setView} currentUser={currentUser} projects={projects} bids={bids} addBid={addBid} onHire={handleHire} />;
+          return <ProjectDetailView projectId={selectedProjectId} setView={setView} currentUser={currentUser} users={users} projects={projects} bids={bids} addBid={addBid} onHire={handleHire} />;
         }
         return <ProjectsView setView={setView} setSelectedProjectId={setSelectedProjectId} projects={projects} />;
       case 'dashboard':
@@ -599,4 +599,3 @@ export default function App() {
     </div>
   );
 }
-
